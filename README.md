@@ -1,8 +1,43 @@
-# goatos
+# Goats
 
-A terminal-first browser OS built with React. Starts in a shell, supports virtual filesystem commands, and launches a graphical shell with `startx`.
+A terminal-native browser OS with an optional graphical shell. You boot into a real, working terminal — xterm.js with full command history, tab completion, job control — and launch a minimal dark-mode GUI with `startx`.
 
-## Quick Start
+I was building something else and accidentally made a UI I actually liked.
+
+Early / proof-of-concept, but it already works.
+
+## What it looks like
+
+**Shell mode** — xterm.js terminal with session restore, persistent history, and 30+ commands:
+
+- Filesystem: `ls`, `cd`, `mkdir`, `touch`, `cat`, `cp`, `mv`, `rm`, `find`
+- System: `jobs`, `ps`, `kill`, `history`, `whoami`, `uname`, `echo`
+- Config: `reg list`, `reg get`, `reg set`, `reg delete`
+- Browser: `browser open`, `browser sessions`, `browser trace`, `browser close`
+- AI: `ask`, `plan`, `run`, `watch`, `memory list/add/search`
+- Agents: `agent list`, `agent create`, `agent run`, `agent delete`
+- GUI: `startx` to launch the graphical shell
+
+**Graphical shell** — dark, minimal home screen with 8 icon tiles:
+
+Files | Browser | Tasks | Automations | Memory | Logs | Settings | Agents
+
+Everything is wired together — browser sessions, command history, memory, automations, agents — all persist across reloads via Zustand + localStorage.
+
+## Tech stack
+
+- React 18 + TypeScript
+- Vite (code-split: terminal ~470KB, GUI ~141KB)
+- Tailwind CSS
+- xterm.js — terminal UI
+- Zustand — state management with localStorage persistence
+- Framer Motion — animations
+
+## Screenshots
+
+> (drag screenshots here)
+
+## Getting started
 
 ```bash
 npm install
@@ -11,104 +46,75 @@ npm run dev
 
 Visit `http://localhost:5173`
 
-## Features
-
-- **Terminal Shell** — xterm.js with 25+ commands
-- **Graphical Shell** — React home screen with icons for 8 apps
-- **Virtual Filesystem** — Real state persistence via Zustand + localStorage
-- **Browser Sessions** — Create, track, and trace browser automation sessions
-- **Automations** — Step-based automation runner
-- **Agents** — AI agent creation and task execution
-- **Registry** — Persistent key-value configuration
-- **Memory** — Persistent memory store with search
-
-## Commands
+## Running tests
 
 ```bash
-# Filesystem
-ls /home/user           # List directory
-cd /home/user           # Change directory
-pwd                     # Print working directory
-mkdir [-p] newdir       # Create directory (with -p for parents)
-touch file.txt          # Create file
-cat file.txt            # Read file
-rm [-r] file.txt        # Delete file (-r for directories)
-cp src dest             # Copy
-mv src dest             # Move
-find /home user         # Find files by name or content
-
-# System
-jobs                     # List jobs
-ps                       # List processes
-kill <pid>               # Kill process
-history                  # Show command history (persisted)
-whoami                   # Current user
-uname                    # System info
-clear                    # Clear terminal
-
-# Config
-reg list                 # List all settings
-reg get key              # Get setting value
-reg set key value        # Set setting value
-reg delete key           # Delete a setting
-
-# Browser
-browser open <url>           # Open URL in new session
-browser sessions             # List active sessions
-browser trace <session-id>  # View session traces
-browser close <session-id>   # Close session
-
-# AI
-ask <question>              # Ask AI a question
-plan <task>                 # Generate a plan for a task
-run <command>               # Run a shell command
-watch <command> <interval>   # Watch a command at interval
-memory list                 # List memory items
-memory add <content>         # Add a memory item
-memory search <query>       # Search memories
-
-# Agents
-agent list                    # List all agents
-agent create <name> <desc>   # Create new agent
-agent run <id> <task>         # Run agent with task
-agent delete <id>             # Delete agent
-
-# GUI
-startx            # Launch graphical shell
+npm run test:run   # Run all 67 tests once
+npm run test       # Run tests in watch mode
 ```
 
-## GUI Apps
+## Project structure
 
-- **Files** — Browse and edit virtual filesystem
-- **Browser** — Manage browser automation sessions
-- **Tasks** — View job history and status
-- **Automations** — Create and run step-based automations
-- **Memory** — Store and search memory items
-- **Logs** — View command history
-- **Settings** — Edit registry configuration
-- **Agents** — Create and run AI agents
-
-## Stack
-
-- React 18 + TypeScript
-- Vite (code-splitting enabled)
-- Tailwind CSS
-- xterm.js
-- Zustand (state management)
-- Framer Motion
-
-## Testing
-
-```bash
-npm run test:run  # Run all tests (70 tests)
-npm run build     # Production build
+```
+src/
+├── App.tsx                    # Root — switches between shell and GUI mode
+├── main.tsx                   # Entry point
+├── types/index.ts             # TypeScript schemas (FSNode, Job, ParsedCommand, etc.)
+├── services/
+│   ├── filesystem.ts          # Virtual filesystem operations
+│   ├── jobs.ts                # Job/process lifecycle
+│   └── registry.ts            # Key-value config
+├── state/
+│   ├── store.ts               # Core Zustand stores
+│   ├── automations.ts         # Automation runner
+│   └── agents.ts              # Agent executor
+├── commands/parser.ts         # Shell command routing
+├── components/
+│   ├── Terminal.tsx           # xterm.js with FitAddon, tab completion, history
+│   └── ErrorBoundary.tsx
+├── apps/                      # GUI applications
+│   ├── home/HomeScreen.tsx
+│   ├── files/FilesApp.tsx
+│   ├── browser/BrowserApp.tsx
+│   ├── tasks/TasksApp.tsx
+│   ├── automations/AutomationsApp.tsx
+│   ├── memory/MemoryApp.tsx
+│   ├── logs/LogsApp.tsx
+│   ├── settings/SettingsApp.tsx
+│   └── agents/AgentsApp.tsx
+└── __tests__/                 # 67 tests (parser, browser, integration, automations, agents)
 ```
 
-## Architecture
+## What's working right now
 
-- Terminal and GUI share Zustand stores backed by localStorage
-- Command parser (`src/commands/parser.ts`) routes to store actions
-- Browser manager provides simulated sessions (SVG placeholders)
-- Automation runner supports: browser.open, browser.click, browser.type, delay, log
-- Agents run tasks with simulated AI responses
-- Shell history persists and rehydrates across sessions
+- Terminal shell with persistent history and session restore
+- Virtual filesystem (mkdir, touch, cat, cp, mv, rm, ls, cd, pwd, find)
+- Browser automation sessions (simulated — SVG placeholders as screenshots)
+- Step-based automation runner (browser.open, browser.click, browser.type, delay, log)
+- AI agent creation and task execution
+- Persistent memory store with search
+- Registry config (key-value, persisted)
+- Graphical home with 8 app tiles
+- Full Zustand state persistence across page reloads
+
+## What's not done / needs work
+
+- Browser sessions are simulated (no real CDP/Puppeteer yet)
+- AI commands use simulated responses (no real API integration yet)
+- `run` and `watch` are stubs
+- Agents are basic task executors, not proper LLM-powered agents
+
+## I probably won't build all of this myself
+
+If you like the vibe and want to pitch in, the highest-impact next steps would be:
+
+1. **Real browser automation** — swap the SVG placeholders for Puppeteer/Playwright
+2. **Actual AI integration** — wire up Claude/OpenAI for `ask`, `plan`, agents
+3. **A proper `run` command** — actual shell command execution, not a stub
+4. **Multi-user / sessions** — proper session isolation and user management
+
+Issues and PRs welcome. Fork it. Make it weird.
+
+## License
+
+MIT
