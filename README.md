@@ -7,6 +7,8 @@ I was building something else and accidentally made a UI I actually liked.
 Early / proof-of-concept, but it already works.
 
 ## What it looks like
+<img width="537" height="159" alt="image" src="https://github.com/user-attachments/assets/b893320b-6b09-40af-82c3-e07c55ea4ae2" />
+
 
 **Shell mode** — xterm.js terminal with session restore, persistent history, and 30+ commands:
 
