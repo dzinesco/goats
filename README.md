@@ -1,4 +1,4 @@
-# Goats
+# GoatOs
 
 A terminal-native browser OS with an optional graphical shell. You boot into a real, working terminal — xterm.js with full command history, tab completion, job control — and launch a minimal dark-mode GUI with `startx`.
 
