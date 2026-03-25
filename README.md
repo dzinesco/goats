@@ -11,7 +11,7 @@ Early / proof-of-concept, but it already works.
 
 
 **Shell mode** — xterm.js terminal with session restore, persistent history, and 30+ commands:
-<img width="537" height="159" alt="image" src="https://github.com/user-attachments/assets/b893320b-6b09-40af-82c3-e07c55ea4ae2" />
+
 - Filesystem: `ls`, `cd`, `mkdir`, `touch`, `cat`, `cp`, `mv`, `rm`, `find`
 - System: `jobs`, `ps`, `kill`, `history`, `whoami`, `uname`, `echo`
 - Config: `reg list`, `reg get`, `reg set`, `reg delete`
@@ -21,7 +21,7 @@ Early / proof-of-concept, but it already works.
 - GUI: `startx` to launch the graphical shell
 
 **Graphical shell** — dark, minimal home screen with 8 icon tiles:
-<img width="1284" height="381" alt="image" src="https://github.com/user-attachments/assets/9df5570b-8ee4-46db-9e91-9246bd8a54a0" />
+
 
 Files | Browser | Tasks | Automations | Memory | Logs | Settings | Agents
 
@@ -38,7 +38,10 @@ Everything is wired together — browser sessions, command history, memory, auto
 
 ## Screenshots
 
-> (drag screenshots here)
+<img width="537" height="159" alt="image" src="https://github.com/user-attachments/assets/b893320b-6b09-40af-82c3-e07c55ea4ae2" />
+<img width="1284" height="381" alt="image" src="https://github.com/user-attachments/assets/9df5570b-8ee4-46db-9e91-9246bd8a54a0" />
+<img width="1284" height="381" alt="image" src="https://github.com/user-attachments/assets/100f2da6-df49-4885-9314-14f0f6ee5eaf" />
+<img width="1278" height="602" alt="image" src="https://github.com/user-attachments/assets/fdeb4b67-fdc6-4ed1-95cb-677373fdc885" />
 
 ## Getting started
 
